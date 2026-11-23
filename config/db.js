@@ -13,7 +13,8 @@ export const pool = new Pool({
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
-    max: 10
+    max: 10,
+    ssl: {}
 })
 
 export default pool;
