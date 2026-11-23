@@ -6,15 +6,10 @@ const app = express();
 
 
 //middlewares
-const allowed = [
-  'https://inventory-app-tau-ten.vercel.app',
-  'http://localhost:5173',
-];
-
 app.use(cors({
-  origin: allowed,
+  origin: 'https://inventory-app-tau-ten.vercel.app', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
+  credentials: true // Allow cookies to be sent with requests
 }));
 app.use(express.json());
 app.use("/products", productRoutes);
