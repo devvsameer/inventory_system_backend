@@ -6,34 +6,37 @@ const app = express();
 
 
 //middlewares
-app.use(cors({
-  origin: 'https://inventory-app-tau-ten.vercel.app', 
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true // Allow cookies to be sent with requests
-}));
+const allowedOrigins = [
+  "https://inventory-app-tau-ten.vercel.app",
+  "http://localhost:5173",
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use("/products", productRoutes);
 
-
-
-
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 let count = 0;
 
 while (true) {
   try {
-    const connection = await pool.getConnection();
+    const client = await pool.connect();
     console.log("Connected to the database");
-    connection.release();
+    client.release();
     break;
   } catch (err) {
     count++;
-    console.error(`Connection attempt ${count} failed:`, err);
+    console.error(`Connection attempt ${count} failed:`, err.message);
     await sleep(3000);
   }
 }
-
 // app.get("/", async (req, res) => {
 //   // res.send("Hello World!");
 //   let query = await pool.query("SELECT * FROM products");

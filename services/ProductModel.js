@@ -1,8 +1,6 @@
-import {pool} from "../config/db.js";
-const findBySku = async (req) =>{
-    const [rows]= await pool.query("SELECT * FROM products WHERE sku = ?",[req.params.sku]);
-    return rows[0];
-}
+import pool from "../config/db.js";
 
-
-export {findBySku};
+export const findBySku = async (sku) => {
+  const { rows } = await pool.query("SELECT * FROM products WHERE sku = $1", [sku]);
+  return rows[0] ?? null;
+};
