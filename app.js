@@ -1,6 +1,7 @@
 import express from "express";
 import pool from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
+import invoiceRoutes from "./routes/invoiceRoutes.js";
 import cors from "cors"
 const app = express();
 
@@ -20,7 +21,7 @@ app.use(
 );
 app.use(express.json());
 app.use("/products", productRoutes);
-
+app.use("/invoices", invoiceRoutes);
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 let count = 0;
